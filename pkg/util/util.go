@@ -13,8 +13,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/watch"
 
-	"github.com/tnozicka/openshift-acme/pkg/api"
-	routeutil "github.com/tnozicka/openshift-acme/pkg/route"
+	"github.com/openshift-psap/openshift-acme/pkg/api"
+	routeutil "github.com/openshift-psap/openshift-acme/pkg/route"
 )
 
 func IsTemporary(obj metav1.Object) bool {

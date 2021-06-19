@@ -25,14 +25,14 @@ import (
 
 	routeclientset "github.com/openshift/client-go/route/clientset/versioned"
 
-	"github.com/tnozicka/openshift-acme/pkg/api"
-	"github.com/tnozicka/openshift-acme/pkg/cmd/genericclioptions"
-	cmdutil "github.com/tnozicka/openshift-acme/pkg/cmd/util"
-	acmeissuer "github.com/tnozicka/openshift-acme/pkg/controller/issuer/acme"
-	routecontroller "github.com/tnozicka/openshift-acme/pkg/controller/route"
-	kubeinformers "github.com/tnozicka/openshift-acme/pkg/machinery/informers/kube"
-	routeinformers "github.com/tnozicka/openshift-acme/pkg/machinery/informers/route"
-	"github.com/tnozicka/openshift-acme/pkg/signals"
+	"github.com/openshift-psap/openshift-acme/pkg/api"
+	"github.com/openshift-psap/openshift-acme/pkg/cmd/genericclioptions"
+	cmdutil "github.com/openshift-psap/openshift-acme/pkg/cmd/util"
+	acmeissuer "github.com/openshift-psap/openshift-acme/pkg/controller/issuer/acme"
+	routecontroller "github.com/openshift-psap/openshift-acme/pkg/controller/route"
+	kubeinformers "github.com/openshift-psap/openshift-acme/pkg/machinery/informers/kube"
+	routeinformers "github.com/openshift-psap/openshift-acme/pkg/machinery/informers/route"
+	"github.com/openshift-psap/openshift-acme/pkg/signals"
 )
 
 type Options struct {
@@ -87,7 +87,7 @@ func NewOpenshiftAcmeControllerCommand(streams genericclioptions.IOStreams) *cob
 	rootCmd := &cobra.Command{
 		Use:   "openshift-acme-controller",
 		Short: "openshift-acme-controller is a controller for Kubernetes (and OpenShift) which will obtain SSL certificates from ACME provider (like \"Let's Encrypt\")",
-		Long:  "openshift-acme-controller is a controller for Kubernetes (and OpenShift) which will obtain SSL certificates from ACME provider (like \"Let's Encrypt\")\n\nFind more information at https://github.com/tnozicka/openshift-acme",
+		Long:  "openshift-acme-controller is a controller for Kubernetes (and OpenShift) which will obtain SSL certificates from ACME provider (like \"Let's Encrypt\")\n\nFind more information at https://github.com/openshift-acme/openshift-acme",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			defer klog.Flush()
 

@@ -3,7 +3,8 @@
 filters:
   ".*":
     approvers:
-    - tnozicka
+    - omertuc
+    - kpouget
 
   "^\\.glide.(lock|yaml)$":
     labels:

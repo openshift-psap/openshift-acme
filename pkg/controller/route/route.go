@@ -44,14 +44,14 @@ import (
 	routeclientset "github.com/openshift/client-go/route/clientset/versioned"
 	_ "github.com/openshift/client-go/route/clientset/versioned/scheme"
 
-	"github.com/tnozicka/openshift-acme/pkg/api"
-	"github.com/tnozicka/openshift-acme/pkg/cert"
-	"github.com/tnozicka/openshift-acme/pkg/controllerutils"
-	"github.com/tnozicka/openshift-acme/pkg/helpers"
-	kubeinformers "github.com/tnozicka/openshift-acme/pkg/machinery/informers/kube"
-	routeinformers "github.com/tnozicka/openshift-acme/pkg/machinery/informers/route"
-	routeutil "github.com/tnozicka/openshift-acme/pkg/route"
-	"github.com/tnozicka/openshift-acme/pkg/util"
+	"github.com/openshift-psap/openshift-acme/pkg/api"
+	"github.com/openshift-psap/openshift-acme/pkg/cert"
+	"github.com/openshift-psap/openshift-acme/pkg/controllerutils"
+	"github.com/openshift-psap/openshift-acme/pkg/helpers"
+	kubeinformers "github.com/openshift-psap/openshift-acme/pkg/machinery/informers/kube"
+	routeinformers "github.com/openshift-psap/openshift-acme/pkg/machinery/informers/route"
+	routeutil "github.com/openshift-psap/openshift-acme/pkg/route"
+	"github.com/openshift-psap/openshift-acme/pkg/util"
 )
 
 const (
@@ -602,7 +602,7 @@ func (rc *RouteController) sync(ctx context.Context, key string) error {
 
 	acmeClient := &acme.Client{
 		DirectoryURL: acmeIssuer.DirectoryURL,
-		UserAgent:    "github.com/tnozicka/openshift-acme",
+		UserAgent:    "github.com/openshift-psap/openshift-acme",
 	}
 	klog.V(4).Infof("Using ACME client with DirectoryURL %q", acmeClient.DirectoryURL)
 

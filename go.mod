@@ -1,4 +1,4 @@
-module github.com/tnozicka/openshift-acme
+module github.com/openshift-psap/openshift-acme
 
 go 1.13
 

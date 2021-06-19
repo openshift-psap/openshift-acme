@@ -16,11 +16,11 @@ import (
 	"k8s.io/apiserver/pkg/storage/names"
 	watchtools "k8s.io/client-go/tools/watch"
 
-	"github.com/tnozicka/openshift-acme/pkg/api"
-	"github.com/tnozicka/openshift-acme/pkg/cert"
-	"github.com/tnozicka/openshift-acme/pkg/util"
-	"github.com/tnozicka/openshift-acme/test/e2e/framework"
-	exutil "github.com/tnozicka/openshift-acme/test/e2e/openshift/util"
+	"github.com/openshift-psap/openshift-acme/pkg/api"
+	"github.com/openshift-psap/openshift-acme/pkg/cert"
+	"github.com/openshift-psap/openshift-acme/pkg/util"
+	"github.com/openshift-psap/openshift-acme/test/e2e/framework"
+	exutil "github.com/openshift-psap/openshift-acme/test/e2e/openshift/util"
 )
 
 const (

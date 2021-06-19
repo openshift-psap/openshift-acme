@@ -42,8 +42,8 @@ oc new-project "${PROJECT}" || oc project "${PROJECT}" 2>/dev/null
 deploy_file=$( mktemp )
 
 cat deploy/$1/deployment.yaml | \
-    sed -e "s~quay.io/tnozicka/openshift-acme:controller~${CONTROLLER_IMAGE}~" | \
-    sed -e "s~quay.io/tnozicka/openshift-acme:exposer~${EXPOSER_IMAGE}~" | \
+    sed -e "s~quay.io/openshift-psap/openshift-acme:controller~${CONTROLLER_IMAGE}~" | \
+    sed -e "s~quay.io/openshift-psap/openshift-acme:exposer~${EXPOSER_IMAGE}~" | \
     sed -e "s~replicas:.*~replicas: 1~" | \
     tee ${deploy_file}
 

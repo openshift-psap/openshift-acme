@@ -3,8 +3,8 @@ package extended
 import (
 	"testing"
 
-	_ "github.com/tnozicka/openshift-acme/test/e2e/openshift/routes"
-	exutil "github.com/tnozicka/openshift-acme/test/e2e/openshift/util"
+	_ "github.com/openshift-psap/openshift-acme/test/e2e/openshift/routes"
+	exutil "github.com/openshift-psap/openshift-acme/test/e2e/openshift/util"
 )
 
 func init() {

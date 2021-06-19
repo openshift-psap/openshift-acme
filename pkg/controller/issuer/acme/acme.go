@@ -30,9 +30,9 @@ import (
 	"k8s.io/client-go/util/workqueue"
 	"k8s.io/klog"
 
-	"github.com/tnozicka/openshift-acme/pkg/api"
-	"github.com/tnozicka/openshift-acme/pkg/helpers"
-	kubeinformers "github.com/tnozicka/openshift-acme/pkg/machinery/informers/kube"
+	"github.com/openshift-psap/openshift-acme/pkg/api"
+	"github.com/openshift-psap/openshift-acme/pkg/helpers"
+	kubeinformers "github.com/openshift-psap/openshift-acme/pkg/machinery/informers/kube"
 )
 
 const (
@@ -322,7 +322,7 @@ func (ac *AccountController) sync(ctx context.Context, key string) error {
 
 	client := &acme.Client{
 		DirectoryURL: acmeIssuer.DirectoryURL,
-		UserAgent:    "github.com/tnozicka/openshift-acme",
+		UserAgent:    "github.com/openshift-psap/openshift-acme",
 	}
 
 	var account *acme.Account

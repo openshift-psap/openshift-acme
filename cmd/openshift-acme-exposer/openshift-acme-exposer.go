@@ -13,8 +13,8 @@ import (
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/klog"
 
-	"github.com/tnozicka/openshift-acme/pkg/cmd/genericclioptions"
-	cmd "github.com/tnozicka/openshift-acme/pkg/cmd/openshift-acme-exposer"
+	"github.com/openshift-psap/openshift-acme/pkg/cmd/genericclioptions"
+	cmd "github.com/openshift-psap/openshift-acme/pkg/cmd/openshift-acme-exposer"
 )
 
 func init() {

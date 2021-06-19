@@ -24,7 +24,7 @@ oc create clusterrolebinding openshift-acme --clusterrole=openshift-acme --servi
 If you want to deploy it directly from GitHub use:
 
 ```bash
-oc apply -fhttps://raw.githubusercontent.com/tnozicka/openshift-acme/master/deploy/cluster-wide/{clusterrole,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
+oc apply -fhttps://raw.githubusercontent.com/openshift-psap/openshift-acme/master/deploy/cluster-wide/{clusterrole,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
 oc create clusterrolebinding openshift-acme --clusterrole=openshift-acme --serviceaccount="$( oc project -q ):openshift-acme" --dry-run -o yaml | oc apply -f -
 ```
 
@@ -42,7 +42,7 @@ oc create rolebinding openshift-acme --role=openshift-acme --serviceaccount="$( 
 If you want to deploy it directly from GitHub use:
 
 ```bash
-oc apply -fhttps://raw.githubusercontent.com/tnozicka/openshift-acme/master/deploy/single-namespace/{role,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
+oc apply -fhttps://raw.githubusercontent.com/openshift-psap/openshift-acme/master/deploy/single-namespace/{role,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
 oc create rolebinding openshift-acme --role=openshift-acme --serviceaccount="$( oc project -q ):openshift-acme" --dry-run -o yaml | oc apply -f -
 ```
 
@@ -62,7 +62,7 @@ oc create rolebinding openshift-acme --role=openshift-acme --serviceaccount="tes
 If you want to deploy it directly from GitHub use:
 
 ```bash
-oc apply -fhttps://raw.githubusercontent.com/tnozicka/openshift-acme/master/deploy/specific-namespaces/{role,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
+oc apply -fhttps://raw.githubusercontent.com/openshift-psap/openshift-acme/master/deploy/specific-namespaces/{role,serviceaccount,issuer-letsencrypt-live,deployment}.yaml
 oc create rolebinding openshift-acme --role=openshift-acme --serviceaccount="$( oc project -q ):openshift-acme" --dry-run -o yaml | oc apply -f -
 oc create rolebinding openshift-acme --role=openshift-acme --serviceaccount="test:openshift-acme" -n "test" --dry-run -o yaml | oc apply -f -
 ```
