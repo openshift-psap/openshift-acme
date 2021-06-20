@@ -1,3 +1,18 @@
+# Fork
+
+This is a fork of the github.com/tnozicka/openshift-acme project.
+
+This fork was created in order to add missing features / bug fixes in order to facilitate the automatic TLS configuration of the https://github.com/openshift-psap/ci-artifacts entitled mirror (see subprojects/entitled-mirror in the linked repository).
+
+These fixes are mostly around supporting passthrough routes (which are required for TLS mutual authentication):
+- TLS key and certificate are now also stored as annotations on the Route object. They used to be only stored under the `.spec.tls` stanza but that stanza is not available on passthrough routes. This caused a failure when the configmap sync of those values was attempted on passthrough routes.
+- The `.spec.tls` stanza was defaulted to edge termination with some policy, this was changed to nil because those defaults were originally created to fix a now obsolete bug. This behavior was copied from https://github.com/tnozicka/openshift-acme/pull/117
+- Fixed configmap sync to now copy from the newly added annotations rather than the `.spec.tls` stanza
+- Fixed repetitive error coming from `syncRouteToSecret` about already existing configmap. This error was caused by fetching the configmap with the wrong namespace/name key.
+- Added `./psap.sh` script to build / upload container images to the openshift-psap Quay repo
+
+___
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KQE4S78YRTEA6)
 
 # openshift-acme

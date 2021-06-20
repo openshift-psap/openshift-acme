@@ -389,13 +389,13 @@ func (rc *RouteController) resolveControllerRef(namespace string, controllerRef 
 }
 
 func needsCertKey(t time.Time, route *routev1.Route) (string, error) {
-	if route.Spec.TLS == nil || route.Spec.TLS.Key == "" || route.Spec.TLS.Certificate == "" {
+	if route.Annotations["tls-key"] == "" || route.Annotations["tls-certificate"] == "" {
 		return "Route is missing CertKey", nil
 	}
 
 	certPemData := &cert.CertPemData{
-		Key: []byte(route.Spec.TLS.Key),
-		Crt: []byte(route.Spec.TLS.Certificate),
+		Key: []byte(route.Annotations["tls-key"]),
+		Crt: []byte(route.Annotations["tls-certificate"]),
 	}
 	certificate, err := certPemData.Certificate()
 	if err != nil {
@@ -738,10 +738,7 @@ func (rc *RouteController) sync(ctx context.Context, key string) error {
 				desiredExposerRoute.Labels[api.AcmeExposerUID] = string(routeReadOnly.UID)
 				desiredExposerRoute.Spec.Path = acmeClient.HTTP01ChallengePath(challenge.Token)
 				desiredExposerRoute.Spec.Port = nil
-				desiredExposerRoute.Spec.TLS = &routev1.TLSConfig{
-					Termination:                   "edge",
-					InsecureEdgeTerminationPolicy: routev1.InsecureEdgeTerminationPolicyAllow,
-				}
+				desiredExposerRoute.Spec.TLS = nil
 				desiredExposerRoute.Spec.To = routev1.RouteTargetReference{
 					Kind: "Service",
 					Name: tmpName,
@@ -1109,15 +1106,13 @@ func (rc *RouteController) sync(ctx context.Context, key string) error {
 			return fmt.Errorf("can't set status: %w", err)
 		}
 
-		if route.Spec.TLS == nil {
-			route.Spec.TLS = &routev1.TLSConfig{
-				// Defaults
-				InsecureEdgeTerminationPolicy: routev1.InsecureEdgeTerminationPolicyRedirect,
-				Termination:                   routev1.TLSTerminationEdge,
-			}
+		if route.Spec.TLS != nil && route.Spec.TLS.Termination != "passthrough" {
+			route.Spec.TLS.Key = string(certPemData.Key)
+			route.Spec.TLS.Certificate = string(certPemData.Crt)
 		}
-		route.Spec.TLS.Key = string(certPemData.Key)
-		route.Spec.TLS.Certificate = string(certPemData.Crt)
+
+		route.Annotations["tls-key"] = string(certPemData.Key)
+		route.Annotations["tls-certificate"] = string(certPemData.Crt)
 
 		// TODO: consider RetryOnConflict with rechecking the managed annotation
 		_, err = rc.routeClient.RouteV1().Routes(routeReadOnly.Namespace).Update(route)
@@ -1204,7 +1199,7 @@ func (rc *RouteController) syncRouteToSecret(ctx context.Context, key string) er
 		return nil
 	}
 
-	secretObjReadOnly, exists, err := rc.kubeInformersForNamespaces.InformersForOrGlobal(namespace).Core().V1().Secrets().Informer().GetIndexer().GetByKey(key)
+	secretObjReadOnly, exists, err := rc.kubeInformersForNamespaces.InformersForOrGlobal(namespace).Core().V1().Secrets().Informer().GetIndexer().GetByKey(fmt.Sprintf("%s/%s", namespace, secretName))
 	if err != nil {
 		klog.Errorf("Fetching object with key %s from store failed with %v", key, err)
 		return err
@@ -1250,8 +1245,8 @@ func (rc *RouteController) syncRouteToSecret(ctx context.Context, key string) er
 	if secret.Data == nil {
 		secret.Data = make(map[string][]byte)
 	}
-	secret.Data[corev1.TLSCertKey] = []byte(routeReadOnly.Spec.TLS.Certificate)
-	secret.Data[corev1.TLSPrivateKeyKey] = []byte(routeReadOnly.Spec.TLS.Key)
+	secret.Data[corev1.TLSCertKey] = []byte(routeReadOnly.Annotations["tls-certificate"])
+	secret.Data[corev1.TLSPrivateKeyKey] = []byte(routeReadOnly.Annotations["tls-key"])
 
 	if !exists {
 		_, err = rc.kubeClient.CoreV1().Secrets(routeReadOnly.Namespace).Create(secret)
