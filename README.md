@@ -1,3 +1,5 @@
+This is a fork, see the [passthrough branch](https://github.com/openshift-psap/openshift-acme/tree/passthrough) for more information
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KQE4S78YRTEA6)
 
 # openshift-acme
